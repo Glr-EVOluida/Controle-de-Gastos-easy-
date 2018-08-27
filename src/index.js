@@ -30,22 +30,28 @@ class Formulario extends React.Component {
        if(tipo === "entrada"){
             let grana = 0;
 
-            this.setState({
-                depositoHistory: [...this.state.depositoHistory,valor]
-                
-            },() => {
-                for(let i = 0;i < this.state.depositoHistory.length ; i++){ 
-                    grana = grana + parseInt(this.state.depositoHistory[i]);
-                }
-                this.setState({total:grana});
-            });
-            document.getElementById("valor").value = "";
+            if(valor === "" ){
+                alert('informe um valor');
+            }else{
+                this.setState({
+                    depositoHistory: [...this.state.depositoHistory,valor]
+                    
+                },() => {
+                    for(let i = 0;i < this.state.depositoHistory.length ; i++){ 
+                        grana = grana + parseInt(this.state.depositoHistory[i]);
+                    }
+                    this.setState({total:grana});
+                });
+                document.getElementById("valor").value = "";
+            }
        }else{
             let total;
             let saqueVar = document.getElementById("valor").value;
             
             if(saqueVar > this.state.total){
                 alert("Valor maior do que o total")
+            }else if(saqueVar === ""){
+                alert('informe um valor');
             }else{
                 this.setState({
                     saqueHistory: [...this.state.saqueHistory,valor]
@@ -69,7 +75,7 @@ class Formulario extends React.Component {
                     </div>
                     <div className="col-md-4" id="form">
                     <h3>Controle de Gastos</h3> 
-                        <input className="form form-control" id="valor" name="valor"  type="text"/><br/>
+                        <input className="form form-control" id="valor" name="valor"  type="number"/><br/>
 
                         <select className="form-control"  name="tipo" id="tipo">
                             <option value="entrada">Deposito</option>
